@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.Employee.EmployeeTDao">
+    <resultMap id="BaseResultMap" type="com.example.demo.Employee.EmployeeT">
+        <id column="employeeId" jdbcType="INTEGER" property="employeeid"/>
+        <result column="employeeName" jdbcType="VARCHAR" property="employeename"/>
+        <result column="employeeSex" jdbcType="VARCHAR" property="employeesex"/>
+        <result column="employeeAge" jdbcType="INTEGER" property="employeeage"/>
+        <result column="employeeAddress" jdbcType="VARCHAR" property="employeeaddress"/>
+        <result column="employeePost" jdbcType="VARCHAR" property="employeepost"/>
+        <result column="employeeStartTime" jdbcType="DATE" property="employeestarttime"/>
+        <result column="employeeEndTime" jdbcType="DATE" property="employeeendtime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    employeeId, employeeName, employeeSex, employeeAge, employeeAddress, employeePost, 
+    employeeStartTime, employeeEndTime
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from employee_t
+        where employeeId = #{employeeid,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from employee_t
+    where employeeId = #{employeeid,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" keyColumn="employeeId" keyProperty="employeeid" parameterType="com.example.demo.Employee.EmployeeT"
+            useGeneratedKeys="true">
+    insert into employee_t (employeeName, employeeSex, employeeAge, 
+      employeeAddress, employeePost, employeeStartTime, 
+      employeeEndTime)
+    values (#{employeename,jdbcType=VARCHAR}, #{employeesex,jdbcType=VARCHAR}, #{employeeage,jdbcType=INTEGER}, 
+      #{employeeaddress,jdbcType=VARCHAR}, #{employeepost,jdbcType=VARCHAR}, #{employeestarttime,jdbcType=DATE}, 
+      #{employeeendtime,jdbcType=DATE})
+  </insert>
+    <insert id="insertSelective" keyColumn="employeeId" keyProperty="employeeid" parameterType="com.example.demo.Employee.EmployeeT"
+            useGeneratedKeys="true">
+        insert into employee_t
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="employeename != null">
+                employeeName,
+            </if>
+            <if test="employeesex != null">
+                employeeSex,
+            </if>
+            <if test="employeeage != null">
+                employeeAge,
+            </if>
+            <if test="employeeaddress != null">
+                employeeAddress,
+            </if>
+            <if test="employeepost != null">
+                employeePost,
+            </if>
+            <if test="employeestarttime != null">
+                employeeStartTime,
+            </if>
+            <if test="employeeendtime != null">
+                employeeEndTime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="employeename != null">
+                #{employeename,jdbcType=VARCHAR},
+            </if>
+            <if test="employeesex != null">
+                #{employeesex,jdbcType=VARCHAR},
+            </if>
+            <if test="employeeage != null">
+                #{employeeage,jdbcType=INTEGER},
+            </if>
+            <if test="employeeaddress != null">
+                #{employeeaddress,jdbcType=VARCHAR},
+            </if>
+            <if test="employeepost != null">
+                #{employeepost,jdbcType=VARCHAR},
+            </if>
+            <if test="employeestarttime != null">
+                #{employeestarttime,jdbcType=DATE},
+            </if>
+            <if test="employeeendtime != null">
+                #{employeeendtime,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.Employee.EmployeeT">
+        update employee_t
+        <set>
+            <if test="employeename != null">
+                employeeName = #{employeename,jdbcType=VARCHAR},
+            </if>
+            <if test="employeesex != null">
+                employeeSex = #{employeesex,jdbcType=VARCHAR},
+            </if>
+            <if test="employeeage != null">
+                employeeAge = #{employeeage,jdbcType=INTEGER},
+            </if>
+            <if test="employeeaddress != null">
+                employeeAddress = #{employeeaddress,jdbcType=VARCHAR},
+            </if>
+            <if test="employeepost != null">
+                employeePost = #{employeepost,jdbcType=VARCHAR},
+            </if>
+            <if test="employeestarttime != null">
+                employeeStartTime = #{employeestarttime,jdbcType=DATE},
+            </if>
+            <if test="employeeendtime != null">
+                employeeEndTime = #{employeeendtime,jdbcType=DATE},
+            </if>
+        </set>
+        where employeeId = #{employeeid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.demo.Employee.EmployeeT">
+    update employee_t
+    set employeeName = #{employeename,jdbcType=VARCHAR},
+      employeeSex = #{employeesex,jdbcType=VARCHAR},
+      employeeAge = #{employeeage,jdbcType=INTEGER},
+      employeeAddress = #{employeeaddress,jdbcType=VARCHAR},
+      employeePost = #{employeepost,jdbcType=VARCHAR},
+      employeeStartTime = #{employeestarttime,jdbcType=DATE},
+      employeeEndTime = #{employeeendtime,jdbcType=DATE}
+    where employeeId = #{employeeid,jdbcType=INTEGER}
+  </update>
+    <select id="findAll" resultType="java.util.List">
+    select *from employee_t
+  </select>
+</mapper>
